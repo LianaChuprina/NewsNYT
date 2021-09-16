@@ -164,13 +164,13 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		8B90EE0B26F0DB4400299E7F /* Core Data */ = {
+		8B90EE0B26F0DB4400299E7F /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				D1D0546E26E695D300E24BAF /* Extenssion+CoreData.swift */,
 				D13461C926D820BC00BED9D4 /* test.xcdatamodeld */,
 			);
-			path = "Core Data";
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		8B90EE0C26F0DB6700299E7F /* Cell */ = {
@@ -270,7 +270,7 @@
 				8B90EDF926F0D55500299E7F /* EmailedNews */,
 				8B90EE0726F0DA5800299E7F /* NotesFavoritesDelete */,
 				8B90EE0C26F0DB6700299E7F /* Cell */,
-				8B90EE0B26F0DB4400299E7F /* Core Data */,
+				8B90EE0B26F0DB4400299E7F /* CoreData */,
 				8B90EE1026F0DBE000299E7F /* API */,
 			);
 			path = test;

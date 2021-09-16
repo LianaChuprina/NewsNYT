@@ -9,12 +9,17 @@ import UIKit
 import Moya
 
 class ViewController: UIViewController {
-    let provider = MoyaProvider<Articles>()
+    
     @IBOutlet private var tableView: UITableView!
+    
+    let provider = MoyaProvider<Articles>()
+    
     var articles = [ArticleResponse]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -36,17 +41,17 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-
 }
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension ViewController: UITableViewDelegate,
                           UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
-    
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,13 +114,18 @@ extension ViewController: UITableViewDelegate,
             )
         )
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return Constants.cellHeight
     }
 }
-    extension ViewController {
+
+extension ViewController {
+    
     private enum Constants {
+        
         static let cellHeight: CGFloat = 150.0
-}
+    }
 }
 

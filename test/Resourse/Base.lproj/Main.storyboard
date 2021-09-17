@@ -155,8 +155,8 @@
                                                     <constraint firstAttribute="height" constant="70" id="hZM-DF-MEP"/>
                                                 </constraints>
                                             </stackView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="photo_2021-09-16 14.05.08" translatesAutoresizingMaskIntoConstraints="NO" id="PUO-8r-KiG">
-                                                <rect key="frame" x="0.0" y="215.5" width="414" height="636.5"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" misplaced="YES" image="photo_2021-09-16 14.05.08" translatesAutoresizingMaskIntoConstraints="NO" id="PUO-8r-KiG">
+                                                <rect key="frame" x="0.0" y="216" width="414" height="614"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.99283558130000005" green="0.96508401629999996" blue="0.93973726030000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -277,9 +277,6 @@
                     <tabBarItem key="tabBarItem" title="" id="KcJ-BF-gpS">
                         <imageReference key="image" image="4444" symbolScale="medium" renderingMode="original"/>
                     </tabBarItem>
-                    <connections>
-                        <outlet property="favoritesTableView" destination="WNK-7S-FY0" id="g4I-qy-8nb"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lEb-xJ-5Qs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

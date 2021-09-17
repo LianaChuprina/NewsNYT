@@ -32,9 +32,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Emailed" id="vm8-Mt-HmX"/>
-                    <connections>
-                        <outlet property="tableViewEmailed" destination="bZ3-qA-Xmj" id="ODX-x9-TlL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ff9-pC-Oa1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

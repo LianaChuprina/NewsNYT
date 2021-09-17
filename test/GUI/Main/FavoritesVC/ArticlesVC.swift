@@ -13,7 +13,7 @@ enum ArticlContarollerState {
     case delete
 }
 
-class ArticlViewController: UIViewController {
+class ArticlesVC: UIViewController {
     private var model: ArticlModel?
     
     @IBOutlet private var headLabel: UILabel!

@@ -11,7 +11,7 @@ import Moya
 class ViewedViewController: UIViewController {
 
     let providerViewed = MoyaProvider<Articles>()
-    
+   
     var articles = [ArticleResponse]()
     
     @IBOutlet weak var tableView: UITableView!
@@ -80,10 +80,9 @@ extension ViewedViewController: UITableViewDelegate,
     
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
+
+       let newViewController =  ArticlesVC()
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main",
-                                                    bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "articlViewController") as! ArticlViewController
         self.present(newViewController,
                      animated: true,
                      completion: nil)
@@ -98,7 +97,7 @@ extension ViewedViewController: UITableViewDelegate,
         )
     )
 }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }

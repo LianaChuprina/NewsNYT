@@ -15,7 +15,7 @@ class FavoritesViewController: UIViewController,
     @IBOutlet var tableView: UITableView!
     var articles = [ArticlesCD]()
     
-    @IBOutlet weak var deleteButton: UIButton!
+//    @IBOutlet weak var deleteButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,8 +74,7 @@ class FavoritesViewController: UIViewController,
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "articlViewController") as! ArticlViewController
+        let newViewController =  ArticlesVC()
         self.present(newViewController,
                      animated: true,
                      completion: nil)
@@ -95,7 +94,7 @@ class FavoritesViewController: UIViewController,
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
                         let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, comletionHandler) in
                             let cellToRemove = articles[indexPath.row]
-                            let ArticlViewController = ArticlViewController()
+                            let ArticlViewController = ArticlesVC()
                             ArticlViewController.someFunc(cellToRemove: cellToRemove)
                             articles.remove(at: indexPath.row)
                             tableView.reloadData()

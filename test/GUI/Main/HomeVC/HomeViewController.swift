@@ -92,10 +92,9 @@ class HomeViewController: UIViewController {
         
         func tableView(_ tableView: UITableView,
                        didSelectRowAt indexPath: IndexPath) {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main",
-                                                        bundle: nil)
             
-            let newViewController = storyBoard.instantiateViewController(withIdentifier:"articlViewController") as! ArticlViewController
+            let newViewController =  ArticlesVC()
+            
             self.present(newViewController,
                 animated: true,
                 completion: nil)

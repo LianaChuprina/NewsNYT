@@ -42,6 +42,18 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    private func someFunc(cellToRemove: ArticlesCD) {
+        let context = NSManagedObjectContext.getContext()
+        context.delete(cellToRemove)
+        
+        do {
+            try context.save()
+        }
+        catch {
+            print("Error")
+        }
+    }
+    
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
@@ -74,29 +86,24 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newViewController =  ArticlesVC()
-        self.present(newViewController,
-                     animated: true,
-                     completion: nil)
-        
-        newViewController.render(
+        let newViewController =  ArticlesVC(
             model: ArticlModel(
-                title: articles[indexPath.row].title ?? "",
-                time: articles[indexPath.row].updatedTime ?? "",
-                abstract: articles[indexPath.row].abstract,
+                title: self.articles[indexPath.row].title ?? "",
+                time: self.articles[indexPath.row].updatedTime ?? "",
+                abstract: self.articles[indexPath.row].abstract,
                 imageURL: nil,
-                id: Int(articles[indexPath.row].id),
+                id: Int(self.articles[indexPath.row].id),
                 state: .delete,
-                url: articles[indexPath.row].url ?? ""
+                url: self.articles[indexPath.row].url ?? ""
             )
         )
+        let myNavigationController = UINavigationController(rootViewController: newViewController)
+        self.present(myNavigationController, animated: true)
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, comletionHandler) in
-            let cellToRemove = articles[indexPath.row]
-            let ArticlViewController = ArticlesVC()
-            ArticlViewController.someFunc(cellToRemove: cellToRemove)
+            someFunc(cellToRemove: articles[indexPath.row])
             articles.remove(at: indexPath.row)
             tableView.reloadData()
         }

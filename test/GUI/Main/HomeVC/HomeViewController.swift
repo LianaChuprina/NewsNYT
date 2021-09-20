@@ -98,24 +98,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let newViewController =  ArticlesVC()
-        
-        self.present(newViewController,
-                     animated: true,
-                     completion: nil)
-        
-        newViewController.render(
+        let newViewController =  ArticlesVC(
             model: ArticlModel(
-                title: articles[indexPath.row].title,
-                time: articles[indexPath.row].updated,
-                abstract: articles[indexPath.row].abstract,
-                imageURL: articles[indexPath.row].media[0].mediaMetadata[2].url,
-                id: articles[indexPath.row].id,
-                state: .favorite,
-                url: articles[indexPath.row].url
-            )
+            title: self.articles[indexPath.row].title,
+            time: self.articles[indexPath.row].updated,
+            abstract: self.articles[indexPath.row].abstract,
+            imageURL: self.articles[indexPath.row].media[0].mediaMetadata[2].url,
+            id: self.articles[indexPath.row].id,
+            state: .favorite,
+            url: self.articles[indexPath.row].url
+            
         )
+    )
+        let myNavigationController = UINavigationController(rootViewController: newViewController)
+        self.present(myNavigationController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

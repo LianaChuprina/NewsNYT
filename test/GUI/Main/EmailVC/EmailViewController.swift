@@ -12,6 +12,7 @@ final class EmailViewController: UIViewController {
     
     let provider = MoyaProvider<Articles>()
     
+    @IBOutlet weak var actuvityIndicator: UIActivityIndicatorView!
     let providerEmailed = MoyaProvider<Articles>()
     
     private let cellsIndexesEmailed = [Int]()
@@ -20,9 +21,18 @@ final class EmailViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    override private func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Most Email"
         
+        actuvityIndicator.color = .black
+        actuvityIndicator.isHidden = false
+        actuvityIndicator.startAnimating()
+        tableView.addSubview(actuvityIndicator)
+
+
+        
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(
@@ -30,11 +40,15 @@ final class EmailViewController: UIViewController {
             forCellReuseIdentifier: "\(ArticlTableViewCell.self)"
         )
         
+        
+        
         provider.request(.emailed) { result in
             print(result)
+            self.actuvityIndicator.isHidden = true
+            self.actuvityIndicator.stopAnimating()
             switch result {
             case .success(let response):
-                let articlsResponse = try? response.map(ArticlesRespose.self)
+                let articlsResponse = try? response.map(ArticlesResponse.self)
                 self.articles = articlsResponse?.results ?? []
                 self.articles.sort { $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending }
                 self.tableView.reloadData()

@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmailViewController" customModule="test" customModuleProvider="target">
             <connections>
+                <outlet property="actuvityIndicator" destination="eJv-hG-huY" id="Eve-Zs-4uH"/>
                 <outlet property="tableView" destination="Ibu-QK-PWs" id="XYO-Q4-5jL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,11 +24,18 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="eJv-hG-huY">
+                    <rect key="frame" x="197" y="400" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.92909641860000003" green="0.87780149610000002" blue="0.77769543409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Ibu-QK-PWs" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1rb-bZ-uLl"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eJv-hG-huY" secondAttribute="trailing" constant="197" id="FTs-cO-lHt"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="eJv-hG-huY" secondAttribute="bottom" constant="442" id="KBe-ix-uAY"/>
+                <constraint firstItem="eJv-hG-huY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="197" id="Qyg-BK-7eI"/>
+                <constraint firstItem="eJv-hG-huY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="dQM-xl-ihJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ibu-QK-PWs" secondAttribute="trailing" id="jJb-7m-Xks"/>
                 <constraint firstItem="Ibu-QK-PWs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kJp-i1-heD"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ibu-QK-PWs" secondAttribute="bottom" id="nWR-RW-Ayl"/>

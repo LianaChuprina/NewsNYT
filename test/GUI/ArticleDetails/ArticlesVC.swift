@@ -25,6 +25,7 @@ class ArticlesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         headLabel.font = UIFont(name: "Cochin-Bold", size: 20)
         subLabel.font = UIFont(name: "Cochin", size: 16)
         dataLabel.font = UIFont(name: "Cochin", size: 10)

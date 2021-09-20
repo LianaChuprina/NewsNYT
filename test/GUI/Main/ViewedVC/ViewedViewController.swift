@@ -10,6 +10,9 @@ import Moya
 
 final class ViewedViewController: UIViewController {
     
+
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     let providerViewed = MoyaProvider<Articles>()
     
     var articles = [ArticleResponse]()
@@ -28,6 +31,14 @@ final class ViewedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Most Viewed"
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        activityIndicator.color = .black
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        tableView.addSubview(activityIndicator)
+
+
         
         fetchViewedFeed()
     }
@@ -35,9 +46,11 @@ final class ViewedViewController: UIViewController {
     private func fetchViewedFeed() {
         providerViewed.request(.viewed) { result in
             print(result)
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
             switch result {
             case .success(let response):
-                let articlsResponse = try? response.map(ArticlesRespose.self)
+                let articlsResponse = try? response.map(ArticlesResponse.self)
                 self.articles = articlsResponse?.results ?? []
                 self.articles.sort {
                     $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending
@@ -59,12 +72,13 @@ extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell", for: indexPath) as? ArticlTableViewCell
-        else { return UITableViewCell() }
         
-        let imageUrl = (articles[indexPath.row].media.count > 0)
+        
+        
+        else { return UITableViewCell() }
+            let imageUrl = (articles[indexPath.row].media.count > 0)
             ? articles[indexPath.row].media[0].mediaMetadata[2].url
             : nil
-        
         cell.render(
             with: ArticlModel(
                 title: articles[indexPath.row].title,

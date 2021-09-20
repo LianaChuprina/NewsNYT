@@ -9,21 +9,19 @@ import Foundation
 import Moya
 import CoreData
 
-class FavoritesViewController: UIViewController,
-                                UITableViewDelegate,
-                                UITableViewDataSource {
+class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     @IBOutlet var tableView: UITableView!
     var articles = [ArticlesCD]()
     
-//    @IBOutlet weak var deleteButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UINib(nibName: "ArticlTableViewCell", bundle: nil),
-                                    forCellReuseIdentifier: "ArticlTableViewCell")
+        tableView.register(UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
+                           forCellReuseIdentifier: "\(ArticlTableViewCell.self)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,16 +89,17 @@ class FavoritesViewController: UIViewController,
             )
         )
     }
-        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-                        let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, comletionHandler) in
-                            let cellToRemove = articles[indexPath.row]
-                            let ArticlViewController = ArticlesVC()
-                            ArticlViewController.someFunc(cellToRemove: cellToRemove)
-                            articles.remove(at: indexPath.row)
-                            tableView.reloadData()
-                        }
-                        return UISwipeActionsConfiguration(actions: [action])
-                    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, comletionHandler) in
+            let cellToRemove = articles[indexPath.row]
+            let ArticlViewController = ArticlesVC()
+            ArticlViewController.someFunc(cellToRemove: cellToRemove)
+            articles.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 extension FavoritesViewController {

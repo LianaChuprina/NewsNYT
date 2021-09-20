@@ -24,7 +24,7 @@ struct ArticleResponse: Codable {
         df.dateFormat = "yyyy-mm-dd hh:mm:ss"
         return df.date(from: updated)
     }
-
+    
     
     struct Media: Codable {
         let mediaMetadata: [MediaMetadata]

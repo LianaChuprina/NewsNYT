@@ -18,7 +18,7 @@ class ArticlTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
         label.font = UIFont(name: "Cochin-Bold", size: 20)
         subTitle.font = UIFont(name: "Cochin", size: 16)
     }
@@ -26,16 +26,16 @@ class ArticlTableViewCell: UITableViewCell {
     func render(with model: ArticlModel) {
         label.text = model.title
         subTitle.text = model.time
-       
-      
-
+        
+        
+        
         guard let imageURL = model.imageURL,
               let url = URL(string: imageURL) else {return}
         
         imageViewXib.kf.setImage(with: url)
-       
+        
     }
 }
-    
+
 
 

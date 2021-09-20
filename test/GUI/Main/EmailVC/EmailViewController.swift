@@ -8,7 +8,7 @@
 import UIKit
 import Moya
 
-class EmailViewController: UIViewController {
+final class EmailViewController: UIViewController {
     
     let provider = MoyaProvider<Articles>()
     
@@ -20,14 +20,15 @@ class EmailViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewDidLoad() {
+    override private func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "ArticlTableViewCell",
-                                        bundle: nil),
-                                  forCellReuseIdentifier: "ArticlTableViewCell")
+        tableView.register(
+            UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
+            forCellReuseIdentifier: "\(ArticlTableViewCell.self)"
+        )
         
         provider.request(.emailed) { result in
             print(result)
@@ -35,7 +36,7 @@ class EmailViewController: UIViewController {
             case .success(let response):
                 let articlsResponse = try? response.map(ArticlesRespose.self)
                 self.articles = articlsResponse?.results ?? []
-                self.articles.sort {$0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending}
+                self.articles.sort { $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending }
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error.errorCode)
@@ -44,16 +45,15 @@ class EmailViewController: UIViewController {
         }
     }
 }
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension EmailViewController: UITableViewDelegate,
-                                 UITableViewDataSource {
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
+extension EmailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
     
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell",
                                                  for: indexPath)
         if let cellGood = cell as? ArticlTableViewCell {
@@ -72,12 +72,12 @@ extension EmailViewController: UITableViewDelegate,
         else {
             cellGood.render(with:
                                 ArticlModel(title: articles[indexPath.row].title,
-                                            time: articles[indexPath.row].updated,
-                                            abstract: nil,
-                                            imageURL: "",
-                                            id:articles[indexPath.row].id,
-                                            state: .favorite,
-                                            url: articles[indexPath.row].url
+                        time: articles[indexPath.row].updated,
+                        abstract: nil,
+                        imageURL: "",
+                        id:articles[indexPath.row].id,
+                        state: .favorite,
+                        url: articles[indexPath.row].url
                     )
             )
         }
@@ -87,8 +87,7 @@ extension EmailViewController: UITableViewDelegate,
         }
     }
     
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let newViewController =  ArticlesVC()
         

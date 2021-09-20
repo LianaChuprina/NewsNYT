@@ -33,16 +33,17 @@ class ArticlesVC: UIViewController {
     @IBAction func handleFavorite(_ sender: UIButton) {
         saveArticle()
     }
+    
     @IBAction func handleUrl(_ sender: Any) {
         if let url = URL(string: model?.url ?? "") {
-               if UIApplication.shared.canOpenURL(url) {
-                   if #available(iOS 10.0, *) {
-                       UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                   } else {
-                       UIApplication.shared.openURL(url)
-                   }
-               }
-           }
+            if UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
     }
     
     public func render(model: ArticlModel) {
@@ -77,9 +78,7 @@ class ArticlesVC: UIViewController {
         articleObject.updatedTime = model.time
         articleObject.id = Int64(model.id)
         articleObject.imageURL = model.imageURL
-    
         
-
         do {
             try context.save()
         } catch let error as NSError {
@@ -102,9 +101,9 @@ class ArticlesVC: UIViewController {
     func someEntityExists(id: Int64, entityName: String, fieldName: String, context: NSManagedObjectContext) -> Bool {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = NSPredicate(format: "\(fieldName) == %@", String(id))
-
+        
         var results: [NSManagedObject] = []
-
+        
         do {
             results = try context.fetch(fetchRequest)
             print(results)
@@ -112,7 +111,7 @@ class ArticlesVC: UIViewController {
         catch {
             print("error executing fetch request: \(error)")
         }
-
+        
         return results.count > 0
     }
 }

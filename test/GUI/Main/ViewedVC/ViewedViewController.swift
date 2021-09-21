@@ -27,16 +27,20 @@ final class ViewedViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Most Viewed"
+        
         presenter?.viewController = self
         presenter?.fetchViewedFeed()
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+
         activityIndicator.color = .black
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         tableView.addSubview(activityIndicator)
     }
     
-    public func render(model: ModelViewed) {
+    public func render(model: ViewModel) {
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
         articles = model.articles
@@ -46,6 +50,7 @@ final class ViewedViewController: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
@@ -53,7 +58,7 @@ extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell", for: indexPath) as? ArticlTableViewCell else { return UITableViewCell() }
         
-            let imageUrl = (articles[indexPath.row].media.count > 0)
+        let imageUrl = (articles[indexPath.row].media.count > 0)
             ? articles[indexPath.row].media[0].mediaMetadata[2].url
             : nil
         cell.render(
@@ -78,16 +83,16 @@ extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let newViewController =  ArticlesVC(
             model: ArticlModel(
-            title: self.articles[indexPath.row].title,
-            time: self.articles[indexPath.row].updated,
-            abstract: self.articles[indexPath.row].abstract,
-            imageURL: imageUrl,
-            id: self.articles[indexPath.row].id,
-            state: .favorite,
-            url: self.articles[indexPath.row].url
-            
+                title: self.articles[indexPath.row].title,
+                time: self.articles[indexPath.row].updated,
+                abstract: self.articles[indexPath.row].abstract,
+                imageURL: imageUrl,
+                id: self.articles[indexPath.row].id,
+                state: .favorite,
+                url: self.articles[indexPath.row].url
+                
+            )
         )
-    )
         let myNavigationController = UINavigationController(rootViewController: newViewController)
         self.present(myNavigationController, animated: true)
     }

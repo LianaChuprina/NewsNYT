@@ -19,7 +19,8 @@ final class HomeViewController: UIViewController {
         override func viewDidLoad() {
         super.viewDidLoad()
         
-            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+            
             tableView.delegate = self
             tableView.dataSource = self
             
@@ -29,15 +30,15 @@ final class HomeViewController: UIViewController {
             )
         title = "Most Viewed"
             presenter?.homeViewController = self
-        presenter?.fetchHomeFeed()
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            presenter?.fetchHomeFeed()
+            
             actuvityIndicator.color = .black
             actuvityIndicator.isHidden = false
             actuvityIndicator.startAnimating()
-        tableView.addSubview(actuvityIndicator)
+            tableView.addSubview(actuvityIndicator)
             }
 
-        public func render(model: ModelHome) {
+        public func render(model: ViewModel) {
             actuvityIndicator.isHidden = true
             actuvityIndicator.stopAnimating()
         articles = model.articles

@@ -18,36 +18,37 @@ final class EmailViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-
-        override func viewDidLoad() {
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
-            
-            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-            tableView.delegate = self
-            tableView.dataSource = self
-            
-            tableView.register(
-                UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
-                forCellReuseIdentifier: "\(ArticlTableViewCell.self)"
-            )
-        title = "Most Viewed"
-            presenter?.emailViewController = self
-        presenter?.fetchEmailFeed()
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-            actuvityIndicator.color = .black
-            actuvityIndicator.isHidden = false
-            actuvityIndicator.startAnimating()
-        tableView.addSubview(actuvityIndicator)
-            }
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(
+            UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
+            forCellReuseIdentifier: "\(ArticlTableViewCell.self)"
+        )
+        
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
 
-        public func render(model: ModelEmail) {
-            actuvityIndicator.isHidden = true
-            actuvityIndicator.stopAnimating()
+        title = "Most Viewed"
+        presenter?.emailViewController = self
+        presenter?.fetchEmailFeed()
+        
+        actuvityIndicator.color = .black
+        actuvityIndicator.isHidden = false
+        actuvityIndicator.startAnimating()
+        tableView.addSubview(actuvityIndicator)
+    }
+    
+    public func render(model: ViewModel) {
+        actuvityIndicator.isHidden = true
+        actuvityIndicator.stopAnimating()
         articles = model.articles
         tableView.reloadData()
-                }
     }
+}
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension EmailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -75,14 +76,14 @@ extension EmailViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            var imageUrl: String?
-            if self.articles[indexPath.row].media.count > 0,
-               self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
-                imageUrl = self.articles[indexPath.row].media[0].mediaMetadata[2].url
-            }
-            let newViewController =  ArticlesVC(
-                model: ArticlModel(
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var imageUrl: String?
+        if self.articles[indexPath.row].media.count > 0,
+           self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
+            imageUrl = self.articles[indexPath.row].media[0].mediaMetadata[2].url
+        }
+        let newViewController =  ArticlesVC(
+            model: ArticlModel(
                 title: self.articles[indexPath.row].title,
                 time: self.articles[indexPath.row].updated,
                 abstract: self.articles[indexPath.row].abstract,

@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 class PresenterEmail {
-    private var model = ModelEmail()
+    private var model = ViewModel()
     public weak var emailViewController: EmailViewController?
     private let providerEmail = MoyaProvider<Articles>()
     

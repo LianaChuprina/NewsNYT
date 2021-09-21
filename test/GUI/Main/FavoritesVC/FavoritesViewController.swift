@@ -24,7 +24,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             queue: .main) { _ in
             self.ifNeedReload = true
         }
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        
         tableView.delegate = self
         tableView.dataSource = self
         

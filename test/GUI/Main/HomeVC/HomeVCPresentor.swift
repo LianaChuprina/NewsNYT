@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 class PresenterHome {
-    private var model = ModelHome()
+    private var model = ViewModel()
     public weak var homeViewController: HomeViewController?
     private let providerHome = MoyaProvider<Articles>()
     

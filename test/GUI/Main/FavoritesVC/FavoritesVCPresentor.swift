@@ -12,7 +12,6 @@ import CoreData
 class PresenterFavorites {
      var model = ModelFavorites()
      public weak var viewController: FavoritesViewController?
-     private let providerFavorites = MoyaProvider<Articles>()
     
     
      public func fetchArticles() {

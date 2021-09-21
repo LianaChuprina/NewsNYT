@@ -9,12 +9,12 @@ import Foundation
 import Moya
 
 class PresenterViewed {
-    private var model = ModelViewed()
+    private var model = ViewModel()
     public weak var viewController: ViewedViewController?
-    private let providerEmail = MoyaProvider<Articles>()
+    private let providerViewed = MoyaProvider<Articles>()
     
     public func fetchViewedFeed() {
-        providerEmail.request(.viewed) { result in
+        providerViewed.request(.viewed) { result in
             switch result {
             case .success(let response):
                 let articlsResponse = try? response.map(ArticlesResponse.self)
@@ -26,6 +26,7 @@ class PresenterViewed {
                 self.viewController?.render(model: self.model)
                 
             case .failure(let error):
+//                show alert
                 print(error.errorCode)
                 print(error.errorDescription ?? "Unknown error")
             }

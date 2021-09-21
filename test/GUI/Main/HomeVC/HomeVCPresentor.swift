@@ -12,6 +12,7 @@ class PresenterHome {
     private var model = ViewModel()
     public weak var homeViewController: HomeViewController?
     private let providerHome = MoyaProvider<Articles>()
+    var alert = UIAlertController()
     
     public func fetchHomeFeed() {
         providerHome.request(.shared) { result in
@@ -25,6 +26,9 @@ class PresenterHome {
                 self.homeViewController?.render(model: self.model)
                 
             case .failure(let error):
+                self.alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    print("Yay! You brought your towel!")
+                }))
                 print(error.errorCode)
                 print(error.errorDescription ?? "Unknown error")
             }

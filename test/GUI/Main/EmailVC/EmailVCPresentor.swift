@@ -12,6 +12,7 @@ class PresenterEmail {
     private var model = ViewModel()
     public weak var emailViewController: EmailViewController?
     private let providerEmail = MoyaProvider<Articles>()
+    var alert = UIAlertController()
     
     public func fetchEmailFeed() {
         providerEmail.request(.emailed) { result in
@@ -25,6 +26,9 @@ class PresenterEmail {
                 self.emailViewController?.render(model: self.model)
                 
             case .failure(let error):
+                self.alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    print("Yay! You brought your towel!")
+                }))
                 print(error.errorCode)
                 print(error.errorDescription ?? "Unknown error")
             }

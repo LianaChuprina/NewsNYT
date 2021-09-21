@@ -12,6 +12,7 @@ class PresenterViewed {
     private var model = ViewModel()
     public weak var viewController: ViewedViewController?
     private let providerViewed = MoyaProvider<Articles>()
+    var alert = UIAlertController()
     
     public func fetchViewedFeed() {
         providerViewed.request(.viewed) { result in
@@ -26,7 +27,9 @@ class PresenterViewed {
                 self.viewController?.render(model: self.model)
                 
             case .failure(let error):
-//                show alert
+                self.alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    print("Yay! You brought your towel!")
+                }))
                 print(error.errorCode)
                 print(error.errorDescription ?? "Unknown error")
             }

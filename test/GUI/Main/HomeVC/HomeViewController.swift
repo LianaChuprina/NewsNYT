@@ -8,7 +8,7 @@
 import UIKit
 import Moya
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: ViewController {
     var articles = [ArticleResponse]()
     var presenter: PresenterHome?
     private let cellsIndexesEmailed = [Int]()

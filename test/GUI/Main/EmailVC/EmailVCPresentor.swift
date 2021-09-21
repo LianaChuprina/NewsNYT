@@ -1,20 +1,20 @@
 //
-//  ViewedVCPresenter.swift
+//  EmailVCPresentor.swift
 //  test
 //
-//  Created by Alexandr on 20.09.2021.
+//  Created by Alexandr on 21.09.2021.
 //
 
 import Foundation
 import Moya
 
-class PresenterViewed {
-    private var model = ModelViewed()
-    public weak var viewController: ViewedViewController?
+class PresenterEmail {
+    private var model = ModelEmail()
+    public weak var emailViewController: EmailViewController?
     private let providerEmail = MoyaProvider<Articles>()
     
-    public func fetchViewedFeed() {
-        providerEmail.request(.viewed) { result in
+    public func fetchEmailFeed() {
+        providerEmail.request(.emailed) { result in
             switch result {
             case .success(let response):
                 let articlsResponse = try? response.map(ArticlesResponse.self)
@@ -22,8 +22,7 @@ class PresenterViewed {
                 self.model.articles.sort {
                     $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending
                 }
-                
-                self.viewController?.render(model: self.model)
+                self.emailViewController?.render(model: self.model)
                 
             case .failure(let error):
                 print(error.errorCode)

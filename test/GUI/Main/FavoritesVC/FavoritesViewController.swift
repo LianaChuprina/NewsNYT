@@ -10,14 +10,20 @@ import Moya
 import CoreData
 
 class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    var presenter: PresenterFavorites!
     @IBOutlet var tableView: UITableView!
-    var articles = [ArticlesCD]()
-    
+    var notification = NotificationCenter.default
+    var ifNeedReload = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "Favorites"
+        notification.addObserver(
+            forName: .newElementCD,
+            object: nil,
+            queue: .main) { _ in
+            self.ifNeedReload = true
+        }
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.delegate = self
         tableView.dataSource = self
@@ -25,38 +31,19 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.register(UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
                            forCellReuseIdentifier: "\(ArticlTableViewCell.self)")
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchArticles()
-    }
-    
-    private func fetchArticles() {
-        let context = NSManagedObjectContext.getContext()
-        let fetchRequest: NSFetchRequest<ArticlesCD> = ArticlesCD.fetchRequest()
-        do {
-            articles = try context.fetch(fetchRequest)
+        presenter?.fetchArticles()
+        if ifNeedReload {
             tableView.reloadData()
-        } catch let error as NSError {
-            print(error.localizedDescription)
+            ifNeedReload = false
         }
     }
-    
-    private func someFunc(cellToRemove: ArticlesCD) {
-        let context = NSManagedObjectContext.getContext()
-        context.delete(cellToRemove)
-        
-        do {
-            try context.save()
-        }
-        catch {
-            print("Error")
-        }
-    }
+ 
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articles.count
+        return presenter?.model.articles.count ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,13 +52,13 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         if let cellGood = cell as? ArticlTableViewCell {
             cellGood.render(
                 with: ArticlModel(
-                    title: articles[indexPath.row].title ?? "",
-                    time: articles[indexPath.row].updatedTime ?? "",
+                    title: presenter?.model.articles[indexPath.row].title ?? "",
+                    time: presenter?.model.articles[indexPath.row].updatedTime ?? "",
                     abstract: nil,
-                    imageURL: articles[indexPath.row].imageURL,
-                    id: Int(articles[indexPath.row].id),
+                    imageURL: presenter?.model.articles[indexPath.row].imageURL,
+                    id: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
                     state: .favorite,
-                    url: articles[indexPath.row].url ?? ""
+                    url: presenter?.model.articles[indexPath.row].url ?? ""
                 )
             )
             return cellGood
@@ -88,23 +75,30 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newViewController =  ArticlesVC(
             model: ArticlModel(
-                title: self.articles[indexPath.row].title ?? "",
-                time: self.articles[indexPath.row].updatedTime ?? "",
-                abstract: self.articles[indexPath.row].abstract,
+                title: presenter?.model.articles[indexPath.row].title ?? "",
+                time: presenter?.model.articles[indexPath.row].updatedTime ?? "",
+                abstract: presenter?.model.articles[indexPath.row].abstract,
                 imageURL: nil,
-                id: Int(self.articles[indexPath.row].id),
+                id: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
                 state: .delete,
-                url: self.articles[indexPath.row].url ?? ""
+                url: presenter?.model.articles[indexPath.row].url ?? ""
             )
         )
         let myNavigationController = UINavigationController(rootViewController: newViewController)
         self.present(myNavigationController, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, comletionHandler) in
-            someFunc(cellToRemove: articles[indexPath.row])
-            articles.remove(at: indexPath.row)
+        let action = UIContextualAction(
+            style: .destructive,
+            title: "Delete") { [weak self] (action, view, comletionHandler) in
+            guard let self = self else { return }
+            
+            guard let cell = self.presenter?.model.articles[indexPath.row] else { return }
+            
+            self.presenter?.removeCell(cell: cell)
+            self.presenter?.model.articles.remove(at: indexPath.row)
             tableView.reloadData()
         }
         return UISwipeActionsConfiguration(actions: [action])

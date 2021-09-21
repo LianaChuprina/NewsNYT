@@ -32,11 +32,9 @@
             <color key="backgroundColor" red="0.92909641860000003" green="0.87780149610000002" blue="0.77769543409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="BGW-sC-oZT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0Ox-Pk-9TK"/>
+                <constraint firstItem="orn-B2-Rmm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="7gH-Ne-3e5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BGW-sC-oZT" secondAttribute="bottom" id="C9o-V9-LJ9"/>
-                <constraint firstItem="orn-B2-Rmm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="197" id="KqS-H4-pPg"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="orn-B2-Rmm" secondAttribute="trailing" constant="197" id="QDJ-do-lAb"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="orn-B2-Rmm" secondAttribute="bottom" constant="442" id="UNo-59-flQ"/>
-                <constraint firstItem="orn-B2-Rmm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="fnj-cX-1KV"/>
+                <constraint firstItem="orn-B2-Rmm" firstAttribute="centerX" secondItem="BGW-sC-oZT" secondAttribute="centerX" id="fi6-4j-h3e"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BGW-sC-oZT" secondAttribute="trailing" id="nSP-5x-Ykv"/>
                 <constraint firstItem="BGW-sC-oZT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="uxo-Dm-T3L"/>
             </constraints>

@@ -9,15 +9,10 @@ import UIKit
 import Moya
 
 final class ViewedViewController: UIViewController {
-    
-
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    let providerViewed = MoyaProvider<Articles>()
-    
     var articles = [ArticleResponse]()
-    
-    @IBOutlet private weak var tableView: UITableView! {
+    var presenter: PresenterViewed?
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var tableView: UITableView! {
         didSet {
             tableView.delegate = self
             tableView.dataSource = self
@@ -30,37 +25,22 @@ final class ViewedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Most Viewed"
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
+        title = "Most Viewed"
+        presenter?.viewController = self
+        presenter?.fetchViewedFeed()
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         activityIndicator.color = .black
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         tableView.addSubview(activityIndicator)
-
-
-        
-        fetchViewedFeed()
     }
     
-    private func fetchViewedFeed() {
-        providerViewed.request(.viewed) { result in
-            print(result)
-            self.activityIndicator.isHidden = true
-            self.activityIndicator.stopAnimating()
-            switch result {
-            case .success(let response):
-                let articlsResponse = try? response.map(ArticlesResponse.self)
-                self.articles = articlsResponse?.results ?? []
-                self.articles.sort {
-                    $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending
-                }
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error.errorCode)
-                print(error.errorDescription ?? "Unknown error")
-            }
-        }
+    public func render(model: ModelViewed) {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+        articles = model.articles
+        tableView.reloadData()
     }
 }
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -71,11 +51,8 @@ extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell", for: indexPath) as? ArticlTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell", for: indexPath) as? ArticlTableViewCell else { return UITableViewCell() }
         
-        
-        
-        else { return UITableViewCell() }
             let imageUrl = (articles[indexPath.row].media.count > 0)
             ? articles[indexPath.row].media[0].mediaMetadata[2].url
             : nil
@@ -93,14 +70,18 @@ extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var imageUrl: String?
+        if self.articles[indexPath.row].media.count > 0,
+           self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
+            imageUrl = self.articles[indexPath.row].media[0].mediaMetadata[2].url
+        }
         let newViewController =  ArticlesVC(
             model: ArticlModel(
             title: self.articles[indexPath.row].title,
             time: self.articles[indexPath.row].updated,
             abstract: self.articles[indexPath.row].abstract,
-            imageURL: self.articles[indexPath.row].media[0].mediaMetadata[2].url,
+            imageURL: imageUrl,
             id: self.articles[indexPath.row].id,
             state: .favorite,
             url: self.articles[indexPath.row].url
@@ -110,7 +91,6 @@ extension ViewedViewController: UITableViewDelegate, UITableViewDataSource {
         let myNavigationController = UINavigationController(rootViewController: newViewController)
         self.present(myNavigationController, animated: true)
     }
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }

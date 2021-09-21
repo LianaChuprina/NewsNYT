@@ -32,10 +32,8 @@
             <color key="backgroundColor" red="0.92909641860000003" green="0.87780149610000002" blue="0.77769543409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Ibu-QK-PWs" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1rb-bZ-uLl"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eJv-hG-huY" secondAttribute="trailing" constant="197" id="FTs-cO-lHt"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="eJv-hG-huY" secondAttribute="bottom" constant="442" id="KBe-ix-uAY"/>
-                <constraint firstItem="eJv-hG-huY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="197" id="Qyg-BK-7eI"/>
-                <constraint firstItem="eJv-hG-huY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="dQM-xl-ihJ"/>
+                <constraint firstItem="eJv-hG-huY" firstAttribute="centerX" secondItem="Ibu-QK-PWs" secondAttribute="centerX" id="6mv-sJ-eTW"/>
+                <constraint firstItem="eJv-hG-huY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="Acy-Bv-3BY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ibu-QK-PWs" secondAttribute="trailing" id="jJb-7m-Xks"/>
                 <constraint firstItem="Ibu-QK-PWs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kJp-i1-heD"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ibu-QK-PWs" secondAttribute="bottom" id="nWR-RW-Ayl"/>

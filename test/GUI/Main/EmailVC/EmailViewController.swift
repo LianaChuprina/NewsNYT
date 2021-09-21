@@ -9,56 +9,45 @@ import UIKit
 import Moya
 
 final class EmailViewController: UIViewController {
-    
-    let provider = MoyaProvider<Articles>()
+    var articles = [ArticleResponse]()
+    var presenter: PresenterEmail?
+    private let cellsIndexesEmailed = [Int]()
     
     @IBOutlet weak var actuvityIndicator: UIActivityIndicatorView!
     let providerEmailed = MoyaProvider<Articles>()
     
-    private let cellsIndexesEmailed = [Int]()
-    
-    var articles = [ArticleResponse]()
-    
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewDidLoad() {
+
+        override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Most Email"
         
-        actuvityIndicator.color = .black
-        actuvityIndicator.isHidden = false
-        actuvityIndicator.startAnimating()
+            
+            self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            tableView.delegate = self
+            tableView.dataSource = self
+            
+            tableView.register(
+                UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
+                forCellReuseIdentifier: "\(ArticlTableViewCell.self)"
+            )
+        title = "Most Viewed"
+            presenter?.emailViewController = self
+        presenter?.fetchEmailFeed()
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            actuvityIndicator.color = .black
+            actuvityIndicator.isHidden = false
+            actuvityIndicator.startAnimating()
         tableView.addSubview(actuvityIndicator)
-
-
-        
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(
-            UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
-            forCellReuseIdentifier: "\(ArticlTableViewCell.self)"
-        )
-        
-        
-        
-        provider.request(.emailed) { result in
-            print(result)
-            self.actuvityIndicator.isHidden = true
-            self.actuvityIndicator.stopAnimating()
-            switch result {
-            case .success(let response):
-                let articlsResponse = try? response.map(ArticlesResponse.self)
-                self.articles = articlsResponse?.results ?? []
-                self.articles.sort { $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending }
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error.errorCode)
-                print(error.errorDescription ?? "Unknown error")
             }
-        }
+
+        public func render(model: ModelEmail) {
+            actuvityIndicator.isHidden = true
+            actuvityIndicator.stopAnimating()
+        articles = model.articles
+        tableView.reloadData()
+                }
     }
-}
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension EmailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -67,57 +56,46 @@ extension EmailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell", for: indexPath) as? ArticlTableViewCell else { return UITableViewCell() }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell",
-                                                 for: indexPath)
-        if let cellGood = cell as? ArticlTableViewCell {
-            
-            if articles[indexPath.row].media.count != 0 {
-                
-                cellGood.render(
-                    with: ArticlModel(
-                        title: articles[indexPath.row].title,
-                        time: articles[indexPath.row].updated,
-                        abstract: nil,
-                        imageURL: articles[indexPath.row].media[0].mediaMetadata[2].url,
-                        id: articles[indexPath.row].id,
-                        state: .favorite,
-                        url: articles[indexPath.row].url))}
-        else {
-            cellGood.render(with:
-                                ArticlModel(title: articles[indexPath.row].title,
-                        time: articles[indexPath.row].updated,
-                        abstract: nil,
-                        imageURL: "",
-                        id:articles[indexPath.row].id,
-                        state: .favorite,
-                        url: articles[indexPath.row].url
-                    )
+        let imageUrl = (articles[indexPath.row].media.count > 0)
+            ? articles[indexPath.row].media[0].mediaMetadata[2].url
+            : nil
+        cell.render(
+            with: ArticlModel(
+                title: articles[indexPath.row].title,
+                time: articles[indexPath.row].updated,
+                abstract: nil,
+                imageURL: imageUrl,
+                id: articles[indexPath.row].id,
+                state: .favorite, url: articles[indexPath.row].url
             )
-        }
-            return cellGood
-        } else {
-            return UITableViewCell()
-        }
+        )
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newViewController =  ArticlesVC(
-            model: ArticlModel(
-            title: self.articles[indexPath.row].title,
-            time: self.articles[indexPath.row].updated,
-            abstract: self.articles[indexPath.row].abstract,
-            imageURL: self.articles[indexPath.row].media[0].mediaMetadata[2].url,
-            id: self.articles[indexPath.row].id,
-            state: .favorite,
-            url: self.articles[indexPath.row].url
-            
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            var imageUrl: String?
+            if self.articles[indexPath.row].media.count > 0,
+               self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
+                imageUrl = self.articles[indexPath.row].media[0].mediaMetadata[2].url
+            }
+            let newViewController =  ArticlesVC(
+                model: ArticlModel(
+                title: self.articles[indexPath.row].title,
+                time: self.articles[indexPath.row].updated,
+                abstract: self.articles[indexPath.row].abstract,
+                imageURL: imageUrl,
+                id: self.articles[indexPath.row].id,
+                state: .favorite,
+                url: self.articles[indexPath.row].url
+                
+            )
         )
-    )
         let myNavigationController = UINavigationController(rootViewController: newViewController)
         self.present(myNavigationController, animated: true)
     }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }

@@ -13,23 +13,9 @@ enum ArticlContarollerState {
     case delete
 }
 
-//class SecondViewController: UINavigationController {
-//
-//    let myViewController: SecondViewController? = SecondViewController()
-//    let myNavigationController = UINavigationController(rootViewController: SecondViewController?)
-//    self.present(myNavigationController, animated: true) {
-//    }
-////
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        view.backgroundColor = .yellow
-//    }
-//
-//}
-
 class ArticlesVC: UIViewController {
     private var model: ArticlModel
+    var notification = NotificationCenter.default
     
     @IBOutlet private var headLabel: UILabel!
     @IBOutlet private var subLabel: UILabel!
@@ -47,7 +33,7 @@ class ArticlesVC: UIViewController {
         btn1.addTarget(self, action: #selector(self.handleUrl), for: .touchUpInside)
         let item1 = UIBarButtonItem(customView: btn1)
         self.navigationItem.setRightBarButtonItems([item1], animated: true)
-
+        
         switch model.state  {
         case .favorite:
             let btn2 = UIButton(type: .custom)
@@ -67,7 +53,7 @@ class ArticlesVC: UIViewController {
         subLabel.font = UIFont(name: "Cochin", size: 16)
         dataLabel.font = UIFont(name: "Cochin", size: 10)
     }
-
+    
     init(model: ArticlModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
@@ -92,6 +78,19 @@ class ArticlesVC: UIViewController {
             }
         }
     }
+    public func render(model: ArticlModel) {
+        self.model = model
+        headLabel.text = model.title
+        dataLabel.text = model.time
+        subLabel.text = model.abstract ?? ""
+        
+        switch model.state  {
+        case .favorite:
+            favorDeliteButton.setTitle("", for: .normal)
+        case .delete:
+            favorDeliteButton.isHidden = true
+        }
+    }
     
     private func saveArticle() {
         let context = NSManagedObjectContext.getContext()
@@ -114,6 +113,7 @@ class ArticlesVC: UIViewController {
         
         do {
             try context.save()
+            notification.post(name: .newElementCD, object: nil)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -158,4 +158,8 @@ struct ArticlModel {
     var state: ArticlContarollerState
     var url: String
 }
-
+extension Notification.Name {
+    static var newElementCD: Notification.Name {
+        Notification.Name("newElementCD")
+    }
+}

@@ -31,14 +31,12 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.92909641860000003" green="0.87780149610000002" blue="0.77769543409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="TQD-N3-2Nx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="197" id="1CM-lC-uaw"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TQD-N3-2Nx" secondAttribute="trailing" constant="197" id="5hp-dX-qUd"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="TQD-N3-2Nx" secondAttribute="bottom" constant="442" id="Evk-1s-sh3"/>
-                <constraint firstItem="TQD-N3-2Nx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="PHw-Bc-x32"/>
+                <constraint firstItem="TQD-N3-2Nx" firstAttribute="centerX" secondItem="2zc-Sf-lgt" secondAttribute="centerX" id="Dy3-89-eZ8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="2zc-Sf-lgt" secondAttribute="bottom" id="e7x-Ah-GOG"/>
                 <constraint firstItem="2zc-Sf-lgt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="nDd-Oa-ED6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2zc-Sf-lgt" secondAttribute="trailing" id="sVP-6j-7xa"/>
                 <constraint firstItem="2zc-Sf-lgt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ur4-6G-HaD"/>
+                <constraint firstItem="TQD-N3-2Nx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="vhi-jF-3g6"/>
             </constraints>
             <point key="canvasLocation" x="15.942028985507248" y="70.982142857142847"/>
         </view>

@@ -21,6 +21,9 @@ class BasicViewController: UIViewController {
         case .shared:
             
             title = "Shared"
+        case .article:
+            
+            title = "Article"
             
         }
     }
@@ -48,4 +51,5 @@ enum StateNameVC {
     case viewed
     case email
     case shared
+    case article
 }

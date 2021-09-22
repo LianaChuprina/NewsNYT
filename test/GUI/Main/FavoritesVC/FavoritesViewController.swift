@@ -17,6 +17,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        
         title = "Favorites"
         notification.addObserver(
             forName: .newElementCD,
@@ -105,8 +108,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         return UISwipeActionsConfiguration(actions: [action])
     }
 }
+
 extension FavoritesViewController {
     private enum Constants {
         static let cellHeight: CGFloat = 150.0
     }
 }
+
+
+

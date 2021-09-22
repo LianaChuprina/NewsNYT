@@ -8,6 +8,6 @@
 import Foundation
 import CoreData
 
-class ModelFavorites {
+class ModelArticle {
     var articles = [ArticlesCD]()
 }

@@ -130,8 +130,7 @@ class ArticlesVC: BasicViewController {
             print("Error")
         }
     }
-    
-    func someEntityExists(id: Int64, entityName: String, fieldName: String, context: NSManagedObjectContext) -> Bool {
+func someEntityExists(id: Int64, entityName: String, fieldName: String, context: NSManagedObjectContext) -> Bool {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = NSPredicate(format: "\(fieldName) == %@", String(id))
         

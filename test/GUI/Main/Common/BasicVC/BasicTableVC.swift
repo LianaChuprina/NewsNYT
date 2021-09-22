@@ -83,43 +83,43 @@ extension BasicTableVC: UITableViewDelegate, UITableViewDataSource {
                 time: articles[indexPath.row].updated,
                 abstract: nil,
                 imageURL: imageUrl,
-                                id: articles[indexPath.row].id,
-                                state: .favorite, url: articles[indexPath.row].url
-                            )
-                        )
-                        
-                        return cell
-                    }
-                    
-                    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                        var imageUrl: String?
-                        if self.articles[indexPath.row].media.count > 0,
-                           self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
-                            imageUrl = self.articles[indexPath.row].media[0].mediaMetadata[2].url
-                        }
-                        let newViewController =  ArticlesVC(
-                            model: ArticlModel(
-                                title: self.articles[indexPath.row].title,
-                                time: self.articles[indexPath.row].updated,
-                                abstract: self.articles[indexPath.row].abstract,
-                                imageURL: imageUrl,
-                                id: self.articles[indexPath.row].id,
-                                state: .favorite,
-                                url: self.articles[indexPath.row].url
-                                
-                            )
-                        )
-                        let myNavigationController = UINavigationController(rootViewController: newViewController)
-                        self.present(myNavigationController, animated: true)
-                    }
-                    
-                    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-                        return Constants.cellHeight
-                    }
-                }
+                id: articles[indexPath.row].id,
+                state: .favorite, url: articles[indexPath.row].url
+            )
+        )
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var imageUrl: String?
+        if self.articles[indexPath.row].media.count > 0,
+           self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
+            imageUrl = self.articles[indexPath.row].media[0].mediaMetadata[2].url
+        }
+        let newViewController =  ArticlesVC(
+            model: ArticlModel(
+                title: self.articles[indexPath.row].title,
+                time: self.articles[indexPath.row].updated,
+                abstract: self.articles[indexPath.row].abstract,
+                imageURL: imageUrl,
+                id: self.articles[indexPath.row].id,
+                state: .favorite,
+                url: self.articles[indexPath.row].url
+                
+            )
+        )
+        let myNavigationController = UINavigationController(rootViewController: newViewController)
+        self.present(myNavigationController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return Constants.cellHeight
+    }
+}
 
-                extension BasicTableVC {
-                    private enum Constants {
-                        static let cellHeight: CGFloat = 150.0
-                    }
-                }
+extension BasicTableVC {
+    private enum Constants {
+        static let cellHeight: CGFloat = 150.0
+    }
+}

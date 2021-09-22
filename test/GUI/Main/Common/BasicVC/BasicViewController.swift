@@ -14,15 +14,11 @@ class BasicViewController: UIViewController {
         switch state {
         case .email:
             title = "Email"
-            
         case .viewed:
             title = "Viewed"
-            
         case .shared:
-            
             title = "Shared"
         case .article:
-            
             title = "Article"
             
         }

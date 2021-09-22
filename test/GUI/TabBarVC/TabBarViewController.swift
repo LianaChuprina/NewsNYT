@@ -38,7 +38,10 @@ extension TabBarViewController {
         vc.presenter = presenter
         let navigationVc = UINavigationController(rootViewController: vc)
         vc.tabBarItem = UITabBarItem(
-            title: "Viewed", image: UIImage(named: "popular"), selectedImage: UIImage(named: "popular"))
+            title: "Viewed",
+            image: UIImage(named: "popular"),
+            selectedImage: UIImage(named: "popular")
+        )
         return navigationVc
     }
     func instantiateMostEmailedVC() -> UINavigationController {
@@ -47,7 +50,10 @@ extension TabBarViewController {
         vc.presenter = presenterEmail
         let navigationVc = UINavigationController(rootViewController: vc)
         vc.tabBarItem = UITabBarItem(
-            title: "Email", image: UIImage(named: "email"), selectedImage: UIImage(named: "email"))
+            title: "Email",
+            image: UIImage(named: "email"),
+            selectedImage: UIImage(named: "email")
+        )
         return navigationVc
     }
     func instantiateMostSharedVC() -> UINavigationController {
@@ -56,7 +62,10 @@ extension TabBarViewController {
         vc.presenter = presenterHome
         let navigationVc = UINavigationController(rootViewController: vc)
         vc.tabBarItem = UITabBarItem(
-            title: "New", image: UIImage(named: "home"), selectedImage: UIImage(named: "home"))
+            title: "New",
+            image: UIImage(named: "home"),
+            selectedImage: UIImage(named: "home")
+        )
         
         return navigationVc
     }

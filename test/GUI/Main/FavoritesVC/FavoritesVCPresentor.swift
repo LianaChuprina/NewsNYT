@@ -10,11 +10,11 @@ import Moya
 import CoreData
 
 class PresenterFavorites {
-     var model = ModelFavorites()
-     public weak var viewController: FavoritesViewController?
+    var model = ModelFavorites()
+    public weak var viewController: FavoritesViewController?
     
     
-     public func fetchArticles() {
+    public func fetchArticles() {
         let context = NSManagedObjectContext.getContext()
         let fetchRequest: NSFetchRequest<ArticlesCD> = ArticlesCD.fetchRequest()
         do {
@@ -35,5 +35,5 @@ class PresenterFavorites {
             print("Error")
         }
     }
-
+    
 }

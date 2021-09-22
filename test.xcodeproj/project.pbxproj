@@ -14,7 +14,6 @@
 		8B20008626F9D5DB003CEA9C /* EmailVCPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B20008526F9D5DB003CEA9C /* EmailVCPresentor.swift */; };
 		8B20008C26F9DB29003CEA9C /* HomeVCPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B20008B26F9DB29003CEA9C /* HomeVCPresentor.swift */; };
 		8B20009026F9DDDB003CEA9C /* FavoritesVCPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B20008F26F9DDDB003CEA9C /* FavoritesVCPresentor.swift */; };
-		8B20009226F9DE68003CEA9C /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B20009126F9DE68003CEA9C /* FavoritesModel.swift */; };
 		8B20009626FA1F9A003CEA9C /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B20009526FA1F9A003CEA9C /* BasicViewController.swift */; };
 		8B90EE2726F23B6C00299E7F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B90EE2626F23B6C00299E7F /* String+Extension.swift */; };
 		8B90EE3326F3835B00299E7F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B90EE3126F3835B00299E7F /* HomeViewController.swift */; };
@@ -51,7 +50,6 @@
 		8B20008526F9D5DB003CEA9C /* EmailVCPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVCPresentor.swift; sourceTree = "<group>"; };
 		8B20008B26F9DB29003CEA9C /* HomeVCPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCPresentor.swift; sourceTree = "<group>"; };
 		8B20008F26F9DDDB003CEA9C /* FavoritesVCPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVCPresentor.swift; sourceTree = "<group>"; };
-		8B20009126F9DE68003CEA9C /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
 		8B20009526FA1F9A003CEA9C /* BasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
 		8B90EE2626F23B6C00299E7F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8B90EE3126F3835B00299E7F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				8B93B84926FB246600A15812 /* File.swift */,
-				8B20009126F9DE68003CEA9C /* FavoritesModel.swift */,
 				8B20008326F9CA6D003CEA9C /* ViewModel.swift */,
 				D164050626D826D50097CA87 /* Articles.swift */,
 			);
@@ -411,7 +408,6 @@
 				D1D0546F26E695D300E24BAF /* Extenssion+CoreData.swift in Sources */,
 				8B20009026F9DDDB003CEA9C /* FavoritesVCPresentor.swift in Sources */,
 				8B90EE5326F38DC800299E7F /* TabBarViewController.swift in Sources */,
-				8B20009226F9DE68003CEA9C /* FavoritesModel.swift in Sources */,
 				8B20008C26F9DB29003CEA9C /* HomeVCPresentor.swift in Sources */,
 				8B90EE4F26F38DA500299E7F /* EmailViewController.swift in Sources */,
 				8B90EE2726F23B6C00299E7F /* String+Extension.swift in Sources */,

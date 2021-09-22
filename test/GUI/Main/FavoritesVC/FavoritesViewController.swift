@@ -43,7 +43,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             ifNeedReload = false
         }
     }
- 
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

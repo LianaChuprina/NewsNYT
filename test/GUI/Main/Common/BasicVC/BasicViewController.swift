@@ -7,7 +7,15 @@
 
 import UIKit
 
+enum StateNameVC {
+    case viewed
+    case email
+    case shared
+    case article
+}
+
 class BasicViewController: UIViewController {
+    
     var activityView: UIActivityIndicatorView?
     
     public func setupNameVC(_ state: StateNameVC) {
@@ -25,6 +33,7 @@ class BasicViewController: UIViewController {
     }
     
     public func showActivityIndicator() {
+        
         activityView = UIActivityIndicatorView(style: .large)
         activityView?.center = self.view.center
         activityView?.hidesWhenStopped = true
@@ -32,8 +41,9 @@ class BasicViewController: UIViewController {
         activityView?.startAnimating()
     }
 
-    public func hideActivityIndicator(){
-        if (activityView != nil){
+    public func hideActivityIndicator() {
+        
+        if (activityView != nil) {
             activityView?.stopAnimating()
         }
     }
@@ -41,11 +51,4 @@ class BasicViewController: UIViewController {
     public func showAlert(_ alert: UIAlertController) {
         present(alert, animated: true, completion: nil)
     }
-}
-
-enum StateNameVC {
-    case viewed
-    case email
-    case shared
-    case article
 }

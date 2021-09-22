@@ -8,6 +8,7 @@
 import UIKit
 
 class BasicTableVC: BasicViewController {
+    
     private let tableView = UITableView()
     private var articles = [ArticleResponse]()
     
@@ -26,13 +27,23 @@ class BasicTableVC: BasicViewController {
     }
     
     private func setupTableView() {
+        
         view.addSubview(tableView)
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(
-            UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
-            forCellReuseIdentifier: "\(ArticlTableViewCell.self)")
+        
+        addTableFooterView()
+        addConstraintsToTableView()
+    }
+    
+    private func addTableFooterView() { // to remove empty separators
+        
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+    }
+    
+    private func addConstraintsToTableView() {
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         let horizontalConstraint = NSLayoutConstraint(item: tableView,
                                                       attribute: NSLayoutConstraint.Attribute.top,
@@ -67,11 +78,15 @@ class BasicTableVC: BasicViewController {
 }
 
 extension BasicTableVC: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        tableView.register(UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "\(ArticlTableViewCell.self)")
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell", for: indexPath) as? ArticlTableViewCell else { return UITableViewCell() }
         
         let imageUrl = (articles[indexPath.row].media.count > 0)
@@ -92,6 +107,7 @@ extension BasicTableVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         var imageUrl: String?
         if self.articles[indexPath.row].media.count > 0,
            self.articles[indexPath.row].media[0].mediaMetadata.count == 3 {
@@ -110,6 +126,7 @@ extension BasicTableVC: UITableViewDelegate, UITableViewDataSource {
             )
         )
         let myNavigationController = UINavigationController(rootViewController: newViewController)
+        
         self.present(myNavigationController, animated: true)
     }
     

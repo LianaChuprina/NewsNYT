@@ -25,6 +25,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             forName: .newElementCD,
             object: nil,
             queue: .main) { _ in
+            
             self.ifNeedReload = true
         }
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
@@ -83,7 +84,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 abstract: presenter?.model.articles[indexPath.row].abstract,
                 imageURL: nil,
                 id: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
-                state: .delete,
+                state: .common,
                 url: presenter?.model.articles[indexPath.row].url ?? ""
             )
         )
@@ -98,9 +99,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             title: "Delete") { [weak self] (action, view, comletionHandler) in
             guard let self = self else { return }
             
-            guard let cell = self.presenter?.model.articles[indexPath.row] else { return }
+            guard let article = self.presenter?.model.articles[indexPath.row] else { return }
             
-            self.presenter?.removeCell(cell: cell)
+            self.presenter?.removeArticle(model: article)
             self.presenter?.model.articles.remove(at: indexPath.row)
             tableView.reloadData()
         }

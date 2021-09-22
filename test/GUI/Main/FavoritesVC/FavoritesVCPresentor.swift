@@ -24,9 +24,9 @@ class PresenterFavorites {
         }
     }
     
-    public func removeCell(cell: ArticlesCD) {
+    public func removeArticle(model: ArticlesCD) {
         let context = NSManagedObjectContext.getContext()
-        context.delete(cell)
+        context.delete(model)
         
         do {
             try context.save()

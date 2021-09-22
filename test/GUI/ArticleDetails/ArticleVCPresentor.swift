@@ -16,6 +16,7 @@ class ArticleVCPresenter {
     let notification = NotificationCenter.default
     
     public func saveArticle(model: ArticlModel) {
+        
         let context = NSManagedObjectContext.getContext()
         
         guard let entity = NSEntityDescription.entity(forEntityName: "ArticlesCD", in: context),
@@ -39,18 +40,6 @@ class ArticleVCPresenter {
             notification.post(name: .newElementCD, object: nil)
         } catch let error as NSError {
             print(error.localizedDescription)
-        }
-    }
-    
-    func removeCell (cell: ArticlesCD) {
-        let context = NSManagedObjectContext.getContext()
-        context.delete(cell)
-        
-        do {
-            try context.save()
-        }
-        catch {
-            print("Error")
         }
     }
     

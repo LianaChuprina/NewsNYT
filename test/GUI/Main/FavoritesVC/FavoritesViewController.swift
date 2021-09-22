@@ -105,12 +105,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         return UISwipeActionsConfiguration(actions: [action])
     }
 }
-
 extension FavoritesViewController {
     private enum Constants {
         static let cellHeight: CGFloat = 150.0
     }
 }
-
-
-

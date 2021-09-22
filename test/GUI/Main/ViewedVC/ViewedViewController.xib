@@ -4,14 +4,11 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewedViewController" customModule="test" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="TQD-N3-2Nx" id="dW8-hM-JDW"/>
-                <outlet property="tableView" destination="2zc-Sf-lgt" id="T3E-MH-tGr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,31 +16,9 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2zc-Sf-lgt">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="TQD-N3-2Nx">
-                    <rect key="frame" x="197" y="400" width="20" height="20"/>
-                </activityIndicatorView>
-            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.92909641860000003" green="0.87780149610000002" blue="0.77769543409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="TQD-N3-2Nx" firstAttribute="centerX" secondItem="2zc-Sf-lgt" secondAttribute="centerX" id="Dy3-89-eZ8"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="2zc-Sf-lgt" secondAttribute="bottom" id="e7x-Ah-GOG"/>
-                <constraint firstItem="2zc-Sf-lgt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="nDd-Oa-ED6"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2zc-Sf-lgt" secondAttribute="trailing" id="sVP-6j-7xa"/>
-                <constraint firstItem="2zc-Sf-lgt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ur4-6G-HaD"/>
-                <constraint firstItem="TQD-N3-2Nx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="356" id="vhi-jF-3g6"/>
-            </constraints>
             <point key="canvasLocation" x="15.942028985507248" y="70.982142857142847"/>
         </view>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

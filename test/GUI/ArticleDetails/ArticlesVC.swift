@@ -13,7 +13,7 @@ enum ArticlContarollerState {
     case delete
 }
 
-class ArticlesVC: UIViewController {
+class ArticlesVC: BasicViewController {
     private var model: ArticlModel
     var notification = NotificationCenter.default
     

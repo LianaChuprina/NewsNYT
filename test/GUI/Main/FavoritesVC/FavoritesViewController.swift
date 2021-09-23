@@ -84,23 +84,24 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 abstract: presenter?.model.articles[indexPath.row].abstract,
                 imageURL: nil,
                 id: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
-                state: .common,
+                state: .favorite,
                 url: presenter?.model.articles[indexPath.row].url ?? ""
             )
         )
+        newViewController.removeFavoriteNews = { tableView.reloadData() }
         let myNavigationController = UINavigationController(rootViewController: newViewController)
         self.present(myNavigationController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+
         let action = UIContextualAction(
             style: .destructive,
             title: "Delete") { [weak self] (action, view, comletionHandler) in
             guard let self = self else { return }
-            
+
             guard let article = self.presenter?.model.articles[indexPath.row] else { return }
-            
+
             self.presenter?.removeArticle(model: article)
             self.presenter?.model.articles.remove(at: indexPath.row)
             tableView.reloadData()

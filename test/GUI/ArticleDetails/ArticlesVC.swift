@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-enum ArticlContarollerState {
+enum ArticlState {
     case favorite
     case common
 }
@@ -17,7 +17,10 @@ class ArticlesVC: BasicViewController {
     
     var presenter: ArticleVCPresenter!
     
+    var removeFavoriteNews: (() -> Void)?
+    
     private var model: ArticlModel
+    var isFavorite = false
     
     @IBOutlet private var headLabel: UILabel!
     @IBOutlet private var subLabel: UILabel!
@@ -29,8 +32,11 @@ class ArticlesVC: BasicViewController {
         presenter = ArticleVCPresenter()
         presenter.viewController = self
         
+        setupNavBarIternet()
         setupNameVC(.article)
-        setupNavBarItems()
+        isFavoriteState()
+        stateFavoriteOfId()
+        
         setupLabels()
     }
     
@@ -44,9 +50,27 @@ class ArticlesVC: BasicViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func stateFavoriteOfId() {
+        isFavorite = presenter.fetchArticles(id: model.id) == nil ? false : true
+    }
+    
+   public func isFavoriteState() {
+        
+        if isFavorite {
+            setupNavBarHeart(type: .favorite)
+            presenter.saveArticle(model: model)
+            
+        } else {
+            setupNavBarHeart(type: .common)
+            presenter.removeArticle(model: model)
+        }
+    }
+    
     @objc func handleFavorite() {
         
-        presenter.saveArticle(model: model)
+        isFavorite.toggle()
+        isFavoriteState()
+        removeFavoriteNews?()
     }
     
     @objc func handleUrl() {
@@ -75,7 +99,26 @@ class ArticlesVC: BasicViewController {
         dataLabel.font = UIFont(name: "Cochin", size: 10)
     }
     
-    private func setupNavBarItems() {
+    func setupNavBarHeart(type: ArticlState) {
+        
+        let btn2 = UIButton(type: .detailDisclosure)
+        
+        switch type {
+        case .common:
+            btn2.setImage(UIImage(named: "heatt"), for: .normal)
+        case .favorite:
+            btn2.setImage(UIImage(named: "heart-2"), for: .normal)
+        }
+        
+        btn2.tintColor = .red
+        btn2.image(for: .highlighted)
+        btn2.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        btn2.addTarget(self, action: #selector(handleFavorite), for: .touchUpInside)
+        let item2 = UIBarButtonItem(customView: btn2)
+        self.navigationItem.setLeftBarButtonItems([item2], animated: true)
+    }
+    
+    private func setupNavBarIternet() {
         
         let btn1 = UIButton(type: .custom)
         btn1.setImage(UIImage(named: "free-icon-internet-explorer-220355"), for: .normal)
@@ -83,32 +126,23 @@ class ArticlesVC: BasicViewController {
         btn1.addTarget(self, action: #selector(handleUrl), for: .touchUpInside)
         let item1 = UIBarButtonItem(customView: btn1)
         self.navigationItem.setRightBarButtonItems([item1], animated: true)
-        
-        switch model.state  {
-        case .favorite:
-            let btn2 = UIButton(type: .custom)
-            btn2.setImage(UIImage(named: "free-icon-star-149221"), for: .normal)
-            btn2.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
-            btn2.addTarget(self, action: #selector(handleFavorite), for: .touchUpInside)
-            let item2 = UIBarButtonItem(customView: btn2)
-            self.navigationItem.setLeftBarButtonItems([item2], animated: true)
-        case .common:
-            navigationItem.leftBarButtonItem = nil
-        }
     }
+    
 }
 
 struct ArticlModel {
+    
     var title: String
     var time: String
     var abstract: String?
     var imageURL: String?
     var id: Int
-    var state: ArticlContarollerState
+    var state: ArticlState
     var url: String
 }
 
 extension Notification.Name {
+    
     static var newElementCD: Notification.Name {
         Notification.Name("newElementCD")
     }

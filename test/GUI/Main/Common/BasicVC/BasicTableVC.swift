@@ -120,7 +120,7 @@ extension BasicTableVC: UITableViewDelegate, UITableViewDataSource {
                 abstract: self.articles[indexPath.row].abstract,
                 imageURL: imageUrl,
                 id: self.articles[indexPath.row].id,
-                state: .favorite,
+                state: .common,
                 url: self.articles[indexPath.row].url
                 
             )

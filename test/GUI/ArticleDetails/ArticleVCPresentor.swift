@@ -56,8 +56,37 @@ class ArticleVCPresenter {
         catch {
             print("error executing fetch request: \(error)")
         }
-        
         return results.count > 0
+    }
+    
+    public func fetchArticles(id: Int) -> ArticlesCD? {
+        
+        let context = NSManagedObjectContext.getContext()
+        let fetchRequest: NSFetchRequest<ArticlesCD> = ArticlesCD.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", String(id))
+        var results: [NSManagedObject] = []
+        
+        do {
+            results = try context.fetch(fetchRequest)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        return results.first as? ArticlesCD
+    }
+    
+    public func removeArticle(model: ArticlModel) {
+        
+        let context = NSManagedObjectContext.getContext()
+        
+        guard let entity = fetchArticles(id: model.id) else { return }
+        
+        context.delete(entity)
+        do {
+            try context.save()
+        }
+        catch {
+            print("Error")
+        }
     }
 }
 

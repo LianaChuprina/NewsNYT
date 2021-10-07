@@ -26,7 +26,6 @@ struct ArticleResponse: Codable {
         return df.date(from: updated)
     }
     
-    
     struct Media: Codable {
         let mediaMetadata: [MediaMetadata]
         
@@ -38,7 +37,5 @@ struct ArticleResponse: Codable {
     struct MediaMetadata: Codable {
         let url: String
     }
-    
 }
-
 

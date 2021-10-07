@@ -16,7 +16,6 @@ public enum Articles {
 }
 
 extension Articles: TargetType {
-    
     public var baseURL: URL {
         return URL(string: "https://api.nytimes.com/svc/mostpopular/v2")!
     }

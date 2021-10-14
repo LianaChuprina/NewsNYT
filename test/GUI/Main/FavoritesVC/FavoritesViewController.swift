@@ -14,25 +14,22 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet var tableView: UITableView!
     var notification = NotificationCenter.default
     var ifNeedReload = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        
+
         title = "Favorites"
         notification.addObserver(
             forName: .newElementCD,
             object: nil,
             queue: .main) { _ in
-            
+
             self.ifNeedReload = true
         }
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.register(UINib(nibName: "\(ArticlTableViewCell.self)", bundle: nil),
                            forCellReuseIdentifier: "\(ArticlTableViewCell.self)")
     }
@@ -44,12 +41,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             ifNeedReload = false
         }
     }
-    
-    //MARK: - UITableViewDataSource
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter?.model.articles.count ?? .zero
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell",
                                                  for: indexPath)
@@ -60,7 +56,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                     time: presenter?.model.articles[indexPath.row].updatedTime ?? "",
                     abstract: nil,
                     imageURL: presenter?.model.articles[indexPath.row].imageURL,
-                    id: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
+                    idVC: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
                     state: .favorite,
                     url: presenter?.model.articles[indexPath.row].url ?? ""
                 )
@@ -70,12 +66,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             return UITableViewCell()
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }
-    
-    //MARK: - UITableViewDelegate
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newViewController =  ArticlesVC(
             model: ArticlModel(
@@ -83,21 +78,25 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 time: presenter?.model.articles[indexPath.row].updatedTime ?? "",
                 abstract: presenter?.model.articles[indexPath.row].abstract,
                 imageURL: nil,
-                id: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
+                idVC: Int(presenter?.model.articles[indexPath.row].id ?? .zero),
                 state: .favorite,
                 url: presenter?.model.articles[indexPath.row].url ?? ""
             )
         )
+        
         newViewController.removeFavoriteNews = { tableView.reloadData() }
         let myNavigationController = UINavigationController(rootViewController: newViewController)
         self.present(myNavigationController, animated: true)
     }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let action = UIContextualAction(
             style: .destructive,
-            title: "Delete") { [weak self] (action, view, comletionHandler) in
+            title: "Delete") { [weak self] (action,
+                                            view,
+                                            comletionHandler) in
             guard let self = self else { return }
 
             guard let article = self.presenter?.model.articles[indexPath.row] else { return }
@@ -115,6 +114,3 @@ extension FavoritesViewController {
         static let cellHeight: CGFloat = 150.0
     }
 }
-
-
-

@@ -4,4 +4,5 @@
 target 'test' do
  	pod 'Moya'
 	pod 'Kingfisher'
+   	pod 'SwiftLint'
 end

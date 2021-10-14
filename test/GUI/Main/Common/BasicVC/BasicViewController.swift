@@ -15,9 +15,9 @@ enum StateNameVC {
 }
 
 class BasicViewController: UIViewController {
-    
+
     var activityView: UIActivityIndicatorView?
-    
+
     public func setupNameVC(_ state: StateNameVC) {
         switch state {
         case .email:
@@ -28,12 +28,11 @@ class BasicViewController: UIViewController {
             title = "Shared"
         case .article:
             title = "Article"
-            
         }
     }
-    
+
     public func showActivityIndicator() {
-        
+
         activityView = UIActivityIndicatorView(style: .large)
         activityView?.center = self.view.center
         activityView?.hidesWhenStopped = true
@@ -42,12 +41,11 @@ class BasicViewController: UIViewController {
     }
 
     public func hideActivityIndicator() {
-        
-        if (activityView != nil) {
+        if activityView != nil {
             activityView?.stopAnimating()
         }
     }
-    
+
     public func showAlert(_ alert: UIAlertController) {
         present(alert, animated: true, completion: nil)
     }

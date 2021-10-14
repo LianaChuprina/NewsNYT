@@ -9,28 +9,28 @@ import Foundation
 import Moya
 import CoreData
 
-class FavoritesViewController:  UIViewController,
+class FavoritesViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource {
     @IBOutlet var favoritesTableView: UITableView!
     var articles = [ArticlesCD]()
-    
+
     @IBOutlet weak var deleteButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
-        
+
         favoritesTableView.register(UINib(nibName: "ArticlTableViewCell", bundle: nil),
                                     forCellReuseIdentifier: "ArticlTableViewCell")
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchArticles()
     }
-    
+
     private func fetchArticles() {
         let context = NSManagedObjectContext.getContext()
         let fetchRequest: NSFetchRequest<ArticlesCD> = ArticlesCD.fetchRequest()
@@ -41,12 +41,11 @@ class FavoritesViewController:  UIViewController,
             print(error.localizedDescription)
         }
     }
-    
-    //MARK: - UITableViewDataSource
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell",
                                                  for: indexPath)
@@ -67,19 +66,19 @@ class FavoritesViewController:  UIViewController,
             return UITableViewCell()
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }
-    
-    //MARK: - UITableViewDelegate
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "articlViewController") as! ArticlViewController
+        let newViewController = storyBoard.instantiateViewController(withIdentifier:
+                                                                        "articlViewController") as? ArticlViewController
         self.present(newViewController,
                      animated: true,
                      completion: nil)
-        
+
         newViewController.render(
             model: ArticlModel(
                 title: articles[indexPath.row].title ?? "",
@@ -92,10 +91,14 @@ class FavoritesViewController:  UIViewController,
             )
         )
     }
-        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-                        let action = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, comletionHandler) in
+        func tableView(_ tableView: UITableView,
+                       trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+                        let action = UIContextualAction(style: .destructive,
+                                                        title: "Delete") { [self] (action,
+                                                                                   view,
+                                                                                   comletionHandler) in
                             let cellToRemove = articles[indexPath.row]
-                            let ArticlViewController = ArticlViewController()
+                            let articlViewController = articlViewController()
                             ArticlViewController.someFunc(cellToRemove: cellToRemove)
                             articles.remove(at: indexPath.row)
                             tableView.reloadData()
@@ -109,6 +112,3 @@ extension FavoritesViewController {
         static let cellHeight: CGFloat = 150.0
     }
 }
-
-
-

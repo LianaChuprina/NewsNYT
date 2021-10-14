@@ -19,7 +19,7 @@ extension Articles: TargetType {
     public var baseURL: URL {
         return URL(string: "https://api.nytimes.com/svc/mostpopular/v2")!
     }
-    
+
     public var path: String {
         switch self {
         case .emailed: return "/emailed/30.json"
@@ -27,7 +27,7 @@ extension Articles: TargetType {
         case .viewed: return "/viewed/30.json"
         }
     }
-    
+
     public var method: Moya.Method {
         switch self {
         case .emailed,
@@ -35,25 +35,25 @@ extension Articles: TargetType {
              .viewed: return .get
         }
     }
-    
+
     public var sampleData: Data {
         return Data()
     }
-    
+
     public var task: Task {
         return .requestParameters(parameters: parameters!,
                                   encoding: parameterEncoding)
     }
-    
+
     public var headers: [String: String]? {
-        return ["application":"json"]
+        return ["application": "json"]
     }
-    
+
     public var parameterEncoding: ParameterEncoding {
         return URLEncoding.default
     }
-    
+
     public var parameters: [String: Any]? {
-        ["api-key":Articles.publicKey]
+        ["api-key": Articles.publicKey]
     }
 }

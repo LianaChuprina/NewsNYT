@@ -71,7 +71,6 @@ public struct AccessTokenPlugin: PluginType {
      Initialize a new `AccessTokenPlugin`.
 
      - parameters:
-     - tokenClosure: A closure returning the token to be applied in the pattern `Authorization: <AuthorizationType> <token>`
      */
     public init(tokenClosure: @escaping TokenClosure) {
         self.tokenClosure = tokenClosure

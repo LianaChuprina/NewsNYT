@@ -12,8 +12,7 @@ import CoreData
 class PresenterFavorites {
     var model = ModelFavorites()
     public weak var viewController: FavoritesViewController?
-    
-    
+
     public func fetchArticles() {
         let context = NSManagedObjectContext.getContext()
         let fetchRequest: NSFetchRequest<ArticlesCD> = ArticlesCD.fetchRequest()
@@ -23,17 +22,14 @@ class PresenterFavorites {
             print(error.localizedDescription)
         }
     }
-    
+
     public func removeArticle(model: ArticlesCD) {
         let context = NSManagedObjectContext.getContext()
         context.delete(model)
-        
+
         do {
-            try context.save()
-        }
-        catch {
+            try context.save() } catch {
             print("Error")
         }
     }
-    
 }

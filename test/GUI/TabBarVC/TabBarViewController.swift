@@ -7,19 +7,20 @@
 
 import UIKit
 
-class TabBarViewController: UIViewController, UITabBarControllerDelegate  {
-    
+class TabBarViewController: UIViewController,
+                            UITabBarControllerDelegate {
+
     private var embedTabBarVC: UITabBarController = UITabBarController()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        SetupTabBar()
+        _SetupTabBar()
     }
 }
 
 extension TabBarViewController {
-    
-    func SetupTabBar() {
+
+    func _SetupTabBar() {
         embedTabBarVC.viewControllers = [
             instantiateMostViewedVC(),
             instantiateMostEmailedVC(),
@@ -33,11 +34,11 @@ extension TabBarViewController {
         addChildViewControllerToView(embedTabBarVC, toContainer: view)
     }
     func instantiateMostViewedVC() -> UINavigationController {
-        let vc: ViewedViewController = ViewedViewController()
+        let viewController: ViewedViewController = ViewedViewController()
         let presenter = PresenterViewed()
-        vc.presenter = presenter
-        let navigationVc = UINavigationController(rootViewController: vc)
-        vc.tabBarItem = UITabBarItem(
+        viewController.presenter = presenter
+        let navigationVc = UINavigationController(rootViewController: viewController)
+        viewController.tabBarItem = UITabBarItem(
             title: "Viewed",
             image: UIImage(named: "popular"),
             selectedImage: UIImage(named: "popular")
@@ -45,11 +46,11 @@ extension TabBarViewController {
         return navigationVc
     }
     func instantiateMostEmailedVC() -> UINavigationController {
-        let vc: EmailViewController = EmailViewController()
+        let viewController: EmailViewController = EmailViewController()
         let presenterEmail = PresenterEmail()
-        vc.presenter = presenterEmail
-        let navigationVc = UINavigationController(rootViewController: vc)
-        vc.tabBarItem = UITabBarItem(
+        viewController.presenter = presenterEmail
+        let navigationVc = UINavigationController(rootViewController: viewController)
+        viewController.tabBarItem = UITabBarItem(
             title: "Email",
             image: UIImage(named: "email"),
             selectedImage: UIImage(named: "email")
@@ -57,24 +58,24 @@ extension TabBarViewController {
         return navigationVc
     }
     func instantiateMostSharedVC() -> UINavigationController {
-        let vc: HomeViewController = HomeViewController()
+        let viewController: HomeViewController = HomeViewController()
         let presenterHome = PresenterHome()
-        vc.presenter = presenterHome
-        let navigationVc = UINavigationController(rootViewController: vc)
-        vc.tabBarItem = UITabBarItem(
+        viewController.presenter = presenterHome
+        let navigationVc = UINavigationController(rootViewController: viewController)
+        viewController.tabBarItem = UITabBarItem(
             title: "New",
             image: UIImage(named: "home"),
             selectedImage: UIImage(named: "home")
         )
-        
+
         return navigationVc
     }
     func instantiateFavoriteVC() -> UINavigationController {
-        let vc: FavoritesViewController = FavoritesViewController()
+        let viewController: FavoritesViewController = FavoritesViewController()
         let presentorFavorites = PresenterFavorites()
-        vc.presenter = presentorFavorites
-        let navigationVc = UINavigationController(rootViewController: vc)
-        vc.tabBarItem = UITabBarItem(
+        viewController.presenter = presentorFavorites
+        let navigationVc = UINavigationController(rootViewController: viewController)
+        viewController.tabBarItem = UITabBarItem(
             title: "Favorites",
             image: UIImage(named: "favorite"),
             selectedImage: UIImage(named: "favorite")
@@ -84,16 +85,16 @@ extension TabBarViewController {
 }
 
 extension UIViewController {
-    
+
     func addChildViewControllerToView(_ child: UIViewController, toContainer container: UIView) {
-        
+
         addChild(child)
-        
+
         child.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+
         child.view.frame = container.bounds
         container.addSubview(child.view)
-        
+
         child.didMove(toParent: self)
     }
 }

@@ -9,26 +9,27 @@ import Foundation
 import Moya
 
 class ViewControllerViewed: UIViewController {
-    
+
     let providerViewed = MoyaProvider<Articles>()
     @IBOutlet var tableViewViewed: UITableView!
     var articles = [ArticleResponse]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableViewViewed.delegate = self
         tableViewViewed.dataSource = self
         tableViewViewed.register(UINib(nibName: "ArticlTableViewCell",
                                        bundle: nil),
                                  forCellReuseIdentifier: "ArticlTableViewCell")
-        
+
         providerViewed.request(.viewed) { result in
             print(result)
             switch result {
             case .success(let response):
                 let articlsResponse = try? response.map(ArticlesRespose.self)
                 self.articles = articlsResponse?.results ?? []
-                self.articles.sort {$0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending}
+                self.articles.sort {$0.updated.convertToDate()!
+                    .compare($1.updated.convertToDate()!) == .orderedDescending}
                 self.tableViewViewed.reloadData()
             case .failure(let error):
                 print(error.errorCode)
@@ -44,15 +45,15 @@ extension ViewControllerViewed: UITableViewDelegate,
                    numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
-    
+
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell",
                                                  for: indexPath)
         if let cellGood = cell as? ArticlTableViewCell {
-            
+
             if articles[indexPath.row].media.count != 0 {
-                
+
                 cellGood.render(
                     with: ArticlModel(
                         title: articles[indexPath.row].title,
@@ -74,13 +75,14 @@ extension ViewControllerViewed: UITableViewDelegate,
             return UITableViewCell()
         }
     }
-    
+
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
-        
+
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main",
                                                     bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "articlViewController") as! ArticlViewController
+        let newViewController = storyBoard.instantiateViewController(withIdentifier:
+                                                                        "articlViewController") as? ArticlViewController
         self.present(newViewController,
                      animated: true,
                      completion: nil)
@@ -95,7 +97,6 @@ extension ViewControllerViewed: UITableViewDelegate,
         )
     )
 }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }
@@ -106,6 +107,3 @@ extension ViewControllerViewed: UITableViewDelegate,
     static let cellHeight: CGFloat = 150.0
         }
 }
-
-
-

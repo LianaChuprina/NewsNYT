@@ -11,7 +11,8 @@ import CoreData
 
 extension NSManagedObjectContext {
     static func getContext() -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate // swiftlint:disable:this force_cast
+
         return appDelegate.persistentContainer.viewContext
     }
 }

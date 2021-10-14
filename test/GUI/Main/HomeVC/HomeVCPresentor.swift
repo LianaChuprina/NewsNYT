@@ -25,22 +25,20 @@ class PresenterHome {
                     self.model.articles.sort {
                         $0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending
                     }
-                    
                     self.homeViewController?.render(model: self.model)
-                    
+
                 default:
                     self.alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                         print("Error")
                     }))
-                    
                     self.homeViewController?.showAlert(self.alert)
                 }
-                
+
             case .failure(let error):
                 self.alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                     print("Error")
                 }))
-                
+
                 self.homeViewController?.showAlert(self.alert)
                 print(error.errorCode)
                 print(error.errorDescription ?? "Unknown error")

@@ -10,16 +10,16 @@ import Moya
 
 final class HomeViewController: BasicTableVC {
     var presenter: PresenterHome?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupNameVC(.shared)
         presenter?.homeViewController = self
         showActivityIndicator()
         presenter?.fetchViewedFeed()
     }
-    
+
     public func render(model: ViewModel) {
         render(model.articles)
         hideActivityIndicator()

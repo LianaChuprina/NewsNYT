@@ -27,20 +27,20 @@ class PresenterViewed {
                     }
                     
                     self.viewController?.render(model: self.model)
-                    
+
                 default:
                     self.alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                         print("Error")
                     }))
-                    
+
                     self.viewController?.showAlert(self.alert)
                 }
-                
+
             case .failure(let error):
                 self.alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                     print("Error")
                 }))
-                
+
                 self.viewController?.showAlert(self.alert)
                 print(error.errorCode)
                 print(error.errorDescription ?? "Unknown error")

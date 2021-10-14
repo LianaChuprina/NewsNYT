@@ -33,7 +33,6 @@ extension NetworkLoggerPlugin: PluginType {
 private extension NetworkLoggerPlugin {
 
     func logNetworkRequest(_ request: RequestType, target: TargetType, completion: @escaping ([String]) -> Void) {
-        //cURL formatting
         if configuration.logOptions.contains(.formatRequestAscURL) {
             _ = request.cURLDescription { [weak self] output in
                 guard let self = self else { return }

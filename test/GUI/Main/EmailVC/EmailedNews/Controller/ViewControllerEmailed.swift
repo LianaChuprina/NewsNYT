@@ -14,23 +14,24 @@ class ViewControllerEmailed: UIViewController {
     @IBOutlet var tableViewEmailed: UITableView!
     private let cellsIndexesEmailed = [Int]()
     var articles = [ArticleResponse]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableViewEmailed.delegate = self
         tableViewEmailed.dataSource = self
         tableViewEmailed.register(UINib(nibName: "ArticlTableViewCell",
                                         bundle: nil),
                                   forCellReuseIdentifier: "ArticlTableViewCell")
-        
+
         provider.request(.emailed) { result in
             print(result)
             switch result {
             case .success(let response):
                 let articlsResponse = try? response.map(ArticlesRespose.self)
                 self.articles = articlsResponse?.results ?? []
-                self.articles.sort {$0.updated.convertToDate()!.compare($1.updated.convertToDate()!) == .orderedDescending}
+                self.articles.sort {$0.updated.convertToDate()!
+                    .compare($1.updated.convertToDate()!) == .orderedDescending}
                 self.tableViewEmailed.reloadData()
             case .failure(let error):
                 print(error.errorCode)
@@ -46,7 +47,7 @@ extension ViewControllerEmailed: UITableViewDelegate,
                    numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
-    
+
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticlTableViewCell",
@@ -81,12 +82,13 @@ extension ViewControllerEmailed: UITableViewDelegate,
             return UITableViewCell()
         }
     }
-    
+
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main",
                                                     bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "articlViewController") as! ArticlViewController
+        let newViewController = storyBoard.instantiateViewController(withIdentifier:
+                                                                        "articlViewController") as? ArticlViewController
         self.present(newViewController,
                      animated: true,
                      completion: nil)
@@ -99,11 +101,11 @@ extension ViewControllerEmailed: UITableViewDelegate,
                 id: articles[indexPath.row].id,
                 state: .favorite,
                 url: articles[indexPath.row].url
-                
+
             )
         )
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
     }
@@ -114,4 +116,3 @@ extension ViewControllerEmailed {
         static let cellHeight: CGFloat = 150.0
     }
 }
-

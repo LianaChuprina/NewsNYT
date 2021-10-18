@@ -1,9 +1,3 @@
-//
-//  ArticlTableViewCell.swift
-//  test
-//
-//  Created by Лиана Чуприна on 30.08.2021.
-//
 
 import UIKit
 import Kingfisher

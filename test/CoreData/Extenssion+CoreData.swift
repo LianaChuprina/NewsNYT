@@ -1,9 +1,3 @@
-//
-//  Extenssion+CoreData.swift
-//  test
-//
-//  Created by Лиана Чуприна on 06.09.2021.
-//
 
 import Foundation
 import UIKit

@@ -1,9 +1,3 @@
-//
-//  Articles.swift
-//  test
-//
-//  Created by Лиана Чуприна on 26.08.2021.
-//
 
 import Foundation
 

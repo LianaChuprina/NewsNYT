@@ -1,9 +1,3 @@
-//
-//  String+Extemsion.swift
-//  test
-//
-//  Created by Alexandr on 15.09.2021.
-//
 
 import Foundation
 

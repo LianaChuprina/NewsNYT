@@ -1,9 +1,4 @@
-//
-//  ArticlesVC.swift
-//  test
-//
-//  Created by Alexandr on 17.09.2021.
-//
+
 
 import UIKit
 import CoreData
@@ -49,7 +44,7 @@ class ArticlesVC: BasicViewController {
     }
 
    public func isFavoriteState() {
-        if isFavorite {
+       if model.isFavorite {
             setupNavBarHeart(type: .favorite)
             presenter.saveArticle(model: model)
 
@@ -60,7 +55,7 @@ class ArticlesVC: BasicViewController {
     }
 
     @objc func handleFavorite() {
-        isFavorite.toggle()
+        model.isFavorite.toggle()
         isFavoriteState()
         removeFavoriteNews?()
     }
@@ -132,6 +127,11 @@ class ArticlModel {
     init(title: String, time: String, abstract: String?, imageURL: String?, idVC: Int, state: ArticlState, url: String) {
         self.title = title
         self.time = time
+        self.abstract = abstract
+        self.imageURL = imageURL
+        self.idVC = idVC
+        self.state = state
+        self.url = url
     }
 }
 

@@ -1,9 +1,3 @@
-//
-//  BasicTableVC.swift
-//  test
-//
-//  Created by Alexandr on 22.09.2021.
-//
 
 import UIKit
 import CoreData
@@ -103,7 +97,7 @@ extension BasicTableVC: UITableViewDelegate, UITableViewDataSource {
         let imageUrl = (articles[indexPath.row].media.count > 0)
             ? articles[indexPath.row].media[0].mediaMetadata[2].url
             : nil
-        var model = ArticlModel(
+        let model = ArticlModel(
             title: articles[indexPath.row].title,
             time: articles[indexPath.row].updated,
             abstract: nil,
